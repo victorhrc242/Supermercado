@@ -13,5 +13,9 @@ namespace FrontEnd
         public string username { get; set; }
         public string senha { get; set; }
         public string email { get; set; }
+        public override string ToString()
+        {
+            return $"id:{id} -nome:{nome} -email:{email}";
+        }
     }
 }

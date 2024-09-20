@@ -9,17 +9,30 @@ namespace FrontEnd;
 public class Sistema
 {
     private readonly UsuarioUC _usuarioUC;
-    public Sistema()
+    public Sistema(HttpClient cliente)
     {
-           _usuarioUC= new UsuarioUC();
+           _usuarioUC= new UsuarioUC(cliente);
     }
     public void IniciarSistema()
     {
-        int resposta = ExibirLogin();
-        if(resposta == 0)
+        int resposta=-1;
+        while (resposta!=0)
         {
-            Usuario usuario =new Usuario();
-            _usuarioUC.CadastrarUsuario(usuario);
+            resposta = ExibirLogin();
+            if (resposta == 2)
+            {
+                Usuario usuario = criarusuario();
+                _usuarioUC.CadastrarUsuario(usuario);
+                Console.WriteLine("usuario cadastrado com sucesso");
+            }
+            if (resposta == 3)
+            {
+                List<Usuario> usuarios=_usuarioUC.ListarUsuarios();
+                foreach (Usuario u in usuarios)
+                {
+                    Console.WriteLine(u.ToString());
+                }
+            }
         }
     }
     public int ExibirLogin()
@@ -27,6 +40,7 @@ public class Sistema
         Console.WriteLine("--------- LOGIN ---------");
         Console.WriteLine("1 - Deseja Fazer Login");
         Console.WriteLine("2 - Deseja se Cadastrar");
+        Console.WriteLine("3- Lista usuarios cadastrado");
         return int.Parse(Console.ReadLine());
     }
     public Usuario criarusuario()
