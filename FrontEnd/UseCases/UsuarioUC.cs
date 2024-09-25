@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core._03_Entidades.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
@@ -28,6 +29,12 @@ namespace FrontEnd.UseCases
             //string jsonRequest = JsonSerializer.Serialize(usuario);
             //HttpResponseMessage response = await cliente.PostAsJsonAsync(apiURL, jsonRequest);
             HttpResponseMessage response = _cliente.PostAsJsonAsync("Usuario/adicionar-usuario", usuario).Result;
+        }
+        public Usuario fazerlogin(usuariologinDTO usuarios)
+        {
+            HttpResponseMessage response = _cliente.PostAsJsonAsync("Usuario/fazer-login", usuarios).Result;
+            Usuario usuario= response.Content.ReadFromJsonAsync<Usuario>().Result;
+            return usuario;
         }
     }
 }

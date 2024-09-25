@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core._03_Entidades.DTO;
 using Core.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using TrabalhoFinal._01_Services;
@@ -24,9 +25,10 @@ public class CarrinhoController : ControllerBase
         _service.Adicionar(carrinho);
     }
     [HttpGet("listar-carrinho")]
-    public List<Carrinho> ListarAluno()
+    public List<CarrinhoDTO> ListarAluno()
     {
-        return _service.Listar();
+        List<CarrinhoDTO> listaDTO = _mapper.Map<List<CarrinhoDTO>>(_service.Listar());
+        return listaDTO;
     }
     [HttpPut("editar-carrinho")]
     public void EditarCarrinho(Carrinho p)

@@ -1,4 +1,5 @@
-﻿using Core.Entidades;
+﻿using Core._03_Entidades.DTO;
+using Core.Entidades;
 using TrabalhoFinal._02_Repository;
 
 namespace TrabalhoFinal._01_Services;
@@ -31,5 +32,18 @@ public class UsuarioService
     public void Editar(Usuario editPessoa)
     {
         repository.Editar(editPessoa);
+    }
+    public Usuario fazerlogin(usuariologinDTO usuariologin)
+    {
+       List<Usuario> listusuarios =  Listar();
+        foreach(Usuario usuario in listusuarios)
+        {
+            if(usuario.Username ==usuariologin.Username && usuario.Senha == usuariologin.Senha)
+            {
+               
+            }
+            return usuario;
+        }
+        return null;
     }
 }
