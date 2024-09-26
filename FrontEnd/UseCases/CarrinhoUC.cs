@@ -1,4 +1,5 @@
 ﻿using Core.Entidades;
+using FrontEnd.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace FrontEnd.UseCases
             HttpResponseMessage response = _cliente.PostAsJsonAsync("Carrinho/adicionar-carrinho", carrinho).Result;
         }
 
-        public List<Carrinho> ListarProdutos()
+        public List<CarrinhoDTO> ListarProdutos()
         {
 
-            return _cliente.GetFromJsonAsync<List<Carrinho>>("Carrinho/listar-carrinho").Result;
+            return _cliente.GetFromJsonAsync<List<CarrinhoDTO>>("Carrinho/listar-carrinho").Result;
 
         }
 

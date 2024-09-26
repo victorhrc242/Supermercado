@@ -73,11 +73,11 @@ public class Sistema
                     {
                         Console.WriteLine(u.ToString());
                     }
-                
                     Carrinho carrinho= comprarProduto();
+                    carrinho.UsuarioId = usuariologado.id;
                     _carrinhoUC.adicionarcarrinho(carrinho);
                     Console.WriteLine("produto comprado com sucesso");
-
+                 
                 }
 
             }
@@ -154,10 +154,27 @@ public class Sistema
         Carrinho carrinho=new Carrinho();
         Console.WriteLine("escolha o produto");
         carrinho.ProdutoId=int.Parse(Console.ReadLine());
-        List<Produto> carrinhos = _produtoUC.ListarProdutos();
-        foreach (Produto u in carrinhos)
+        Console.WriteLine("vc deseja continuar? 1/sim,2/não");
+        int resposta;
+        
+        resposta= int.Parse(Console.ReadLine());
+
+        if (resposta == 1)
         {
-            Console.WriteLine(u.ToString());
+            List<Produto> produto = _produtoUC.ListarProdutos();
+            foreach (Produto u in produto)
+            {
+                Console.WriteLine(u.ToString());
+            }
+            comprarProduto();
+        }
+        if(resposta == 2)
+        {
+            List<CarrinhoDTO> carrinhoDTO = _carrinhoUC.ListarProdutos();
+            foreach (CarrinhoDTO u in carrinhoDTO)
+            {
+                Console.WriteLine(u.ToString());
+            }
         }
         return carrinho;
 

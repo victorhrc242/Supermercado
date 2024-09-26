@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core._03_Entidades.DTO;
 using Core.Entidades;
+using FrontEnd.models;
 using Microsoft.AspNetCore.Mvc;
 using TrabalhoFinal._01_Services;
 

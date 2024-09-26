@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using Core._03_Entidades.DTO;
+using Core.Entidades;
+using FrontEnd.models;
 
 namespace TrabalhoFinal._03_Entidades.DTOs
 {
@@ -6,6 +9,7 @@ namespace TrabalhoFinal._03_Entidades.DTOs
     {
         public MappingProfile()
         {
+            CreateMap<CarrinhoDTO, Carrinho>().ReverseMap();
         }
     }
 }
