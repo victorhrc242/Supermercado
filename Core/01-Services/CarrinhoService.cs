@@ -22,9 +22,9 @@ public class CarrinhoService
         repository.Remover(id);
     }
 
-    public List<CarrinhoDTO> Listar()
+    public List<Readcarrinho> Listar(int id)
     {
-        return repository.Listar();
+        return repository.Listar(id);
     }
     public Carrinho BuscarTimePorId(int id)
     {

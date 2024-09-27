@@ -35,21 +35,28 @@ public class CarrinhoRepository
         connection.Update<Carrinho>(carrinho);
     }
     //template trabalho final
-    public List<CarrinhoDTO> Listar()
+    public List<Readcarrinho> Listar(int usuarioLogadoId)
     {
+
         using var connection = new SQLiteConnection(ConnectionString);
-        List<Carrinho> carrinhos = connection.GetAll<Carrinho>().ToList();
-        List<CarrinhoDTO> carrinhosDTO =  new List<CarrinhoDTO>();
+
+        // Filtrar carrinhos pelo usuarioLogadoId
+        List<Carrinho> carrinhos = connection.GetAll<Carrinho>()
+                                             .Where(c => c.UsuarioId == usuarioLogadoId)
+                                             .ToList();
+
+        List<Readcarrinho> carrinhosDTO = new List<Readcarrinho>();
+
         foreach (Carrinho car in carrinhos)
         {
-            CarrinhoDTO carrinhoDTO = new CarrinhoDTO();
-            carrinhoDTO.produto = _produtoreposyitario.BuscarPorId(car.Id);
-            carrinhoDTO.usuario= _usuariorepositor.BuscarPorId(car.Id);
-        
-
+            Readcarrinho carrinhoDTO = new Readcarrinho();
+            carrinhoDTO.produto = _produtoreposyitario.BuscarPorId(car.ProdutoId);
+            carrinhoDTO.usuario = _usuariorepositor.BuscarPorId(car.UsuarioId);
+            carrinhosDTO.Add(carrinhoDTO);
         }
+
         return carrinhosDTO;
-       
+
     }
     public Carrinho BuscarPorId(int id)
     {

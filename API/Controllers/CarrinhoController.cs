@@ -26,9 +26,9 @@ public class CarrinhoController : ControllerBase
         _service.Adicionar(carrinho);
     }
     [HttpGet("listar-carrinho")]
-    public List<CarrinhoDTO> ListarAluno()
+    public List<Readcarrinho> ListarAluno(int id)
     {
-        List<CarrinhoDTO> listaDTO = _mapper.Map<List<CarrinhoDTO>>(_service.Listar());
+        List<Readcarrinho> listaDTO = _mapper.Map<List<Readcarrinho>>(_service.Listar(id));
         return listaDTO;
     }
     [HttpPut("editar-carrinho")]

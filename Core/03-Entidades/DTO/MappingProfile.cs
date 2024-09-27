@@ -9,7 +9,7 @@ namespace TrabalhoFinal._03_Entidades.DTOs
     {
         public MappingProfile()
         {
-            CreateMap<CarrinhoDTO, Carrinho>().ReverseMap();
+            CreateMap<Readcarrinho, Carrinho>().ReverseMap();
         }
     }
 }

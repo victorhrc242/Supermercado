@@ -7,23 +7,15 @@ using System.Threading.Tasks;
 
 namespace FrontEnd.models
 {
-    public  class Readcarrinho
+    public   class  Readcarrinho
     {
 
-      
-            public int Id { get; set; }
-            public int IdUsuario { get; set; }
-            public string usuario { get; set; } // Adicione o nome do usuário
-            public int IdProduto { get; set; }
-            public string produto { get; set; } // Adicione o nome do produto
-            public decimal PrecoProduto { get; set; } // Adicione o preço do produto
-        
+            public Usuario usuario { get; set; }
+            public Produto produto { get; set; }
 
-
-
-        public override string ToString()
-        {
-            return $"Usuário: {usuario}, Produto: {produto}";
-        }
+            public override string ToString()
+            {
+                return $"Usuário: {usuario}, Produto: {produto}";
+            }
     }
 }
