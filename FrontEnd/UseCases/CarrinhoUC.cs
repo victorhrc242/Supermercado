@@ -22,10 +22,10 @@ namespace FrontEnd.UseCases
             HttpResponseMessage response = _cliente.PostAsJsonAsync("Carrinho/adicionar-carrinho", carrinho).Result;
         }
 
-        public List<Readcarrinho> ListarProdutos()
+        public List<Readcarrinho> ListarProdutos(int usuarioid)
         {
 
-            return _cliente.GetFromJsonAsync<List<Readcarrinho>>("Carrinho/listar-carrinho").Result;
+            return _cliente.GetFromJsonAsync<List<Readcarrinho>>("Carrinho/listar-carrinho-do-usuario?usuarioId=" + usuarioid).Result;
 
         }
 

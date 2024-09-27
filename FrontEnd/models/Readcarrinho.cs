@@ -9,13 +9,14 @@ namespace FrontEnd.models
 {
     public   class  Readcarrinho
     {
-
+        public int id { get; set; }
             public Usuario usuario { get; set; }
             public Produto produto { get; set; }
 
-            public override string ToString()
-            {
-                return $"Usuário: {usuario}, Produto: {produto}";
-            }
+        public override string ToString()
+        {
+            return $"Usuario {usuario.nome} - Produto : {produto.Nome} - Preço: {produto.Preco}";
+        }
     }
 }
+

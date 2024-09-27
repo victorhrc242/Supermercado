@@ -2,17 +2,11 @@
 using Core.Entidades;
 using FrontEnd.models;
 using FrontEnd.UseCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrontEnd;
 public class Sistema
 {
-    private static Usuario usuariologado { get; set; }
+    private static Usuario UsuarioLogado { get; set; }
     private readonly UsuarioUC _usuarioUC;
     private readonly ProdutoUC _produtoUC;
     private readonly CarrinhoUC _carrinhoUC;
@@ -20,27 +14,28 @@ public class Sistema
     {
         _usuarioUC = new UsuarioUC(cliente);
         _produtoUC = new ProdutoUC(cliente);
-        _carrinhoUC=new CarrinhoUC(cliente);
+        _carrinhoUC = new CarrinhoUC(cliente);
     }
     public void IniciarSistema()
     {
         int resposta = -1;
         while (resposta != 0)
         {
-            if (usuariologado == null)
+            if (UsuarioLogado == null)
             {
                 resposta = ExibirLogin();
+
                 if (resposta == 1)
                 {
-                    fazerlogin();
+                    FazerLogin();
                 }
-                if (resposta == 2)
+                else if (resposta == 2)
                 {
-                    Usuario usuario = criarusuario();
+                    Usuario usuario = CriarUsuario();
                     _usuarioUC.CadastrarUsuario(usuario);
-                    Console.WriteLine("usuario cadastrado com sucesso");
+                    Console.WriteLine("Usuário cadastrado com sucesso");
                 }
-                if (resposta == 3)
+                else if (resposta == 3)
                 {
                     List<Usuario> usuarios = _usuarioUC.ListarUsuarios();
                     foreach (Usuario u in usuarios)
@@ -51,59 +46,8 @@ public class Sistema
             }
             else
             {
-                resposta = ExibirLoginMenuprincipal();
-                if (resposta == 1)
-                {
-                    List<Produto> produtos = _produtoUC.ListarProdutos();
-                    foreach (Produto p in produtos)
-                    {
-                        Console.WriteLine(p.ToString());
-                    }
-                }
-                if (resposta == 2)
-                {
-                    Produto produto = criaproduto();
-                    _produtoUC.CiarPorduto(produto);
-                    Console.WriteLine("produto cadastrado com sucesso");
-                }
-                if (resposta == 3)
-                {
-                    Carrinho carrinho = new Carrinho();
-                    List<Produto> produtos = _produtoUC.ListarProdutos();
-                    Console.WriteLine("Produtos disponíveis:");
-                    foreach (Produto p in produtos)
-                    {
-                        Console.WriteLine(p.ToString());
-                    }
-                    Console.WriteLine("Escolha o produto (insira o ID):");
-                    carrinho.UsuarioId = usuariologado.id;
-                    carrinho.ProdutoId = int.Parse(Console.ReadLine());
-                    // Perguntar se o usuário deseja continuar
-                    Console.WriteLine("Você deseja adicionar mais produtos? 1/sim, 2/não");
-                    int respostas = int.Parse(Console.ReadLine());
-
-                    while (respostas == 1)
-                    {
-                        Console.WriteLine("Escolha outro produto (insira o ID):");
-                        carrinho.ProdutoId = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("Você deseja adicionar mais produtos? 1/sim, 2/não");
-                        respostas = int.Parse(Console.ReadLine());
-                    }
-                    if (respostas == 2)
-                    {
-                        List<Readcarrinho> carrinhos = _carrinhoUC.ListarProdutos();
-                        Console.WriteLine("Carrinhos do usuário logado:");
-                        foreach (Readcarrinho p in carrinhos)
-                        {
-                            Console.WriteLine(p.ToString());
-                        }
-                    }
-
-                }
-
+                ExibirMenuPrincipal();
             }
-         
         }
     }
     public int ExibirLogin()
@@ -111,65 +55,102 @@ public class Sistema
         Console.WriteLine("--------- LOGIN ---------");
         Console.WriteLine("1 - Deseja Fazer Login");
         Console.WriteLine("2 - Deseja se Cadastrar");
-        Console.WriteLine("3- Lista usuarios cadastrado");
+        Console.WriteLine("3 - Listar Usuario Cadastrados");
         return int.Parse(Console.ReadLine());
     }
-    public Usuario criarusuario()
+    public Usuario CriarUsuario()
     {
         Usuario usuario = new Usuario();
-        Console.WriteLine("Digite seu nome");
+        Console.WriteLine("Digite seu nome: ");
         usuario.nome = Console.ReadLine();
-        Console.WriteLine("Digite seu username");
+        Console.WriteLine("Digite seu username: ");
         usuario.username = Console.ReadLine();
-        Console.WriteLine("Digite sua senha");
+        Console.WriteLine("Digite seu senha: ");
         usuario.senha = Console.ReadLine();
-        Console.WriteLine("Digite seu email");
+        Console.WriteLine("Digite seu email: ");
         usuario.email = Console.ReadLine();
         return usuario;
     }
-    public void fazerlogin()
+    public Produto CriarProduto()
     {
-        Console.WriteLine("Digite seu username");
-        string usernames = Console.ReadLine();
-        Console.WriteLine("Digite sua senha");
-        string senhas = Console.ReadLine();
-        usuariologinDTO usoDTO = new usuariologinDTO()
+        Produto usuario = new Produto();
+        Console.WriteLine("Digite seu nome: ");
+        usuario.Nome = Console.ReadLine();
+        Console.WriteLine("Digite seu preco: ");
+        usuario.Preco = double.Parse(Console.ReadLine());
+        return usuario;
+    }
+    public void FazerLogin()
+    {
+        Console.WriteLine("Digite seu username: ");
+        string username = Console.ReadLine();
+        Console.WriteLine("Digite sua senha: ");
+        string senha = Console.ReadLine();
+        usuariologinDTO usuDTO = new usuariologinDTO
         {
-            Username = usernames,
-            Senha = senhas
+            Username = username,
+            Senha = senha
         };
-        Usuario usuario = _usuarioUC.fazerlogin(usoDTO);
+        Usuario usuario = _usuarioUC.fazerlogin(usuDTO);
         if (usuario == null)
         {
-            Console.WriteLine("usuario ou senha invalidos!!!");
+            Console.WriteLine("Usuário ou senha inválidos!!!");
         }
-        usuariologado = usuario;
-        Console.WriteLine("usuario logado!");
+        UsuarioLogado = usuario;
     }
-
-
-    public int ExibirLoginMenuprincipal()
+    public void ExibirMenuPrincipal()
     {
-            Console.WriteLine("1- Listar Produtos");
-            Console.WriteLine("2- Cadastrar Produto");
-            Console.WriteLine("2- Realizar uma Compra");
-            Console.WriteLine("qual operação deseja realizar");
-        return int.Parse(Console.ReadLine());
+        Console.WriteLine("1 - Listar Produtos");
+        Console.WriteLine("2 - Cadastrar Produto");
+        Console.WriteLine("3 - Realizar uma compra");
+        Console.WriteLine("Qual operação deseja realizar?");
+        int resposta = int.Parse(Console.ReadLine());
 
-    
+        if (resposta == 1)
+        {
+            ListarProdutos();
+        }
+        else if (resposta == 2)
+        {
+            Produto produto = CriarProduto();
+            _produtoUC.CiarPorduto(produto);
+            Console.WriteLine("Usuário cadastrado com sucesso");
+        }
+        else if (resposta == 3)
+        {
+            int opcao = 1;
+            while (opcao == 1)
+            {
+                //Listar Produto
+                ListarProdutos();
+                //Escolher Produto
+                Console.WriteLine("Digite os produtos que deseja comprar:");
+                int produtoId = int.Parse(Console.ReadLine());
+                Carrinho c = new Carrinho();
+                c.ProdutoId = produtoId;
+                c.UsuarioId = UsuarioLogado.id;
+                _carrinhoUC.adicionarcarrinho(c);
 
+                Console.WriteLine("Escolha a opção: " +
+                    "\n 1- Escolher mais produtos" +
+                    "\n 2- Finalizar compra");
+                opcao = int.Parse(Console.ReadLine());
+            }
+            List<Readcarrinho> carrinhosDTO = _carrinhoUC.ListarProdutos(UsuarioLogado.id);
+            foreach (Readcarrinho car in carrinhosDTO)
+            {
+                Console.WriteLine(car.ToString());
+            }
+
+        }
     }
-    public Produto criaproduto()
+
+    private void ListarProdutos()
     {
-        Produto produto = new Produto();
-        Console.WriteLine("Digite o nome do produto");
-        produto.Nome = Console.ReadLine();
-        Console.WriteLine("Digite o preço");
-        produto.Preco = int.Parse(Console.ReadLine());
-
-
-        return produto;
+        List<Produto> produtos = _produtoUC.ListarProdutos();
+        foreach (Produto u in produtos)
+        {
+            Console.WriteLine(u.ToString());
+        }
     }
-
-   
 }

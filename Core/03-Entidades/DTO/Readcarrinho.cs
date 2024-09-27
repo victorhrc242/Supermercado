@@ -12,7 +12,7 @@ namespace FrontEnd.models
   
         public  Usuario usuario { get; set; }
      public   Produto produto { get; set; }
-      
-       
+
+
     }
 }

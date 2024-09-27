@@ -1,5 +1,5 @@
-﻿using Core._03_Entidades.DTO;
-using Core.Entidades;
+﻿using Core.Entidades;
+using Dapper;
 using Dapper.Contrib.Extensions;
 using FrontEnd.models;
 using System.Data.SQLite;
@@ -9,14 +9,13 @@ namespace TrabalhoFinal._02_Repository;
 public class CarrinhoRepository
 {
     private readonly string ConnectionString;
-    private readonly ProdutoRepository _produtoreposyitario;
-    private readonly UsuarioRepository _usuariorepositor;
+    private readonly ProdutoRepository _repositoryProduto;
+    private readonly UsuarioRepository _repositoryUsuario;
     public CarrinhoRepository(string connectioString)
     {
         ConnectionString = connectioString;
-        _produtoreposyitario = new ProdutoRepository(connectioString);
-        _usuariorepositor = new UsuarioRepository(connectioString);
-        
+        _repositoryProduto = new ProdutoRepository(connectioString);
+        _repositoryUsuario = new UsuarioRepository(connectioString);
     }
     public void Adicionar(Carrinho carrinho)
     {
@@ -34,29 +33,34 @@ public class CarrinhoRepository
         using var connection = new SQLiteConnection(ConnectionString);
         connection.Update<Carrinho>(carrinho);
     }
-    //template trabalho final
-    public List<Readcarrinho> Listar(int usuarioLogadoId)
+    public List<Carrinho> Listar()
     {
-
         using var connection = new SQLiteConnection(ConnectionString);
+        List<Carrinho> list = connection.GetAll<Carrinho>().ToList();
+        //TransformarListaCarrinhoEmCarrinhoDTO();
+        return list;
+    }
 
-        // Filtrar carrinhos pelo usuarioLogadoId
-        List<Carrinho> carrinhos = connection.GetAll<Carrinho>()
-                                             .Where(c => c.UsuarioId == usuarioLogadoId)
-                                             .ToList();
+    private List<Readcarrinho> TransformarListaCarrinhoEmCarrinhoDTO(List<Carrinho> list)
+    {
+        List<Readcarrinho> listDTO = new List<Readcarrinho>();
 
-        List<Readcarrinho> carrinhosDTO = new List<Readcarrinho>();
-
-        foreach (Carrinho car in carrinhos)
+        foreach (Carrinho car in list)
         {
-            Readcarrinho carrinhoDTO = new Readcarrinho();
-            carrinhoDTO.produto = _produtoreposyitario.BuscarPorId(car.ProdutoId);
-            carrinhoDTO.usuario = _usuariorepositor.BuscarPorId(car.UsuarioId);
-            carrinhosDTO.Add(carrinhoDTO);
+            Readcarrinho readCarrinho = new Readcarrinho();
+            readCarrinho.produto = _repositoryProduto.BuscarPorId(car.ProdutoId);
+            readCarrinho.usuario = _repositoryUsuario.BuscarPorId(car.UsuarioId);
+            listDTO.Add(readCarrinho);
         }
+        return listDTO;
+    }
 
-        return carrinhosDTO;
-
+    public List<Readcarrinho> ListarCarrinhoDoUsuario(int usuarioId)
+    {
+        using var connection = new SQLiteConnection(ConnectionString);
+        List<Carrinho> list = connection.Query<Carrinho>($"SELECT Id, UsuarioId, ProdutoId FROM Carrinhos WHERE UsuarioId = {usuarioId}").ToList();
+        List<Readcarrinho> listDTO = TransformarListaCarrinhoEmCarrinhoDTO(list);
+        return listDTO;
     }
     public Carrinho BuscarPorId(int id)
     {
