@@ -1,4 +1,5 @@
-﻿using Core._03_Entidades.DTO;
+﻿using Core._03_Entidades;
+using Core._03_Entidades.DTO;
 using Core.Entidades;
 using FrontEnd.models;
 using FrontEnd.UseCases;
@@ -10,11 +11,13 @@ public class Sistema
     private readonly UsuarioUC _usuarioUC;
     private readonly ProdutoUC _produtoUC;
     private readonly CarrinhoUC _carrinhoUC;
+    private readonly EnderecoUC _EnderecoUC;
     public Sistema(HttpClient cliente)
     {
         _usuarioUC = new UsuarioUC(cliente);
         _produtoUC = new ProdutoUC(cliente);
         _carrinhoUC = new CarrinhoUC(cliente);
+        _EnderecoUC= new EnderecoUC(cliente);
     }
     public void IniciarSistema()
     {
@@ -141,9 +144,60 @@ public class Sistema
             {
                 Console.WriteLine(car.ToString());
             }
+            Console.WriteLine("Deseja 1-Retirar  ou 2-Entregar");
+            int opcaos =int.Parse(Console.ReadLine());
 
+            if(opcaos== 1)
+            {
+                Console.WriteLine("ok a sua encomdenda esta pronta para a retirada");
+            }
+            if(opcaos== 2)
+            {
+                Entregar();
+            }
+       
         }
     }
+
+
+   public void Entregar()
+    {
+        List<Endereco> enderecos= _EnderecoUC.ListarEnderecos(UsuarioLogado.id);
+        foreach(Endereco e in enderecos)
+        {
+            Console.WriteLine(e.ToString());
+        }
+
+        int opcao = 1;
+        if (enderecos.Count == 0)
+        {
+            Endereco enderecoss =cadastrar();
+            _EnderecoUC.adicionarcarrinho(enderecoss);
+            Console.WriteLine("Usuário cadastrado com sucesso");
+        }
+        else{
+
+            listarendeeco();
+            Console.WriteLine("qual desses eo seu endereço");
+            int endereop=int .Parse(Console.ReadLine());
+            
+        }
+
+
+    }
+
+    public Endereco cadastrar()
+    {
+        Endereco enderecos=new Endereco();
+        Console.WriteLine("Qual o nome da sua Rua");
+        enderecos.Rua=(Console.ReadLine());
+        Console.WriteLine("Qual o seu bairro");
+        enderecos.Bairro = (Console.ReadLine());
+        Console.WriteLine("qual o numero de sua casa");
+        enderecos.Numero=int.Parse(Console.ReadLine());
+        return enderecos;
+    }
+
 
     private void ListarProdutos()
     {
@@ -153,4 +207,14 @@ public class Sistema
             Console.WriteLine(u.ToString());
         }
     }
+
+    private void listarendeeco()
+    {
+        List<Endereco> enderecos = _EnderecoUC.ListarEnderecos(UsuarioLogado.id);
+        foreach (Endereco e in enderecos)
+        {
+            Console.WriteLine(e.ToString());
+        }
+    }
+  
 }
