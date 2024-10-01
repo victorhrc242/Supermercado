@@ -26,9 +26,9 @@ namespace Core._01_Services
             repository.Remover(id);
         }
 
-        public List<Endereco> Listar()
+        public List<Endereco> Listar(int usuarioid)
         {
-            return repository.Listar();
+            return repository.ListarCarrinhoDoUsuario(usuarioid);
         }
         public Endereco BuscarTimePorId(int id)
         {

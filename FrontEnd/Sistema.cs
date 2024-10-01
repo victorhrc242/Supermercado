@@ -94,8 +94,8 @@ public class Sistema
             Username = username,
             Senha = senha
         };
-        Usuario usuario = _usuarioUC.fazerlogin(usuDTO);
-        if (usuario == null)
+        Usuario usuario = _usuarioUC.FazerLogin(usuDTO);
+        if (usuario == null )
         {
             Console.WriteLine("Usuário ou senha inválidos!!!");
         }

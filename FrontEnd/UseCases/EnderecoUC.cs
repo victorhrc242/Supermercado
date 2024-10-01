@@ -1,4 +1,5 @@
 ﻿using Core._03_Entidades;
+using Core.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace FrontEnd.UseCases
         public List<Endereco> ListarEnderecos(int usuraioid)
         {
 
-            return _cliente.GetFromJsonAsync<List<Endereco>>("Endereco/listar-Endereços?usuarioId = " + usuraioid).Result;
+            return _cliente.GetFromJsonAsync<List<Endereco>>("Carrinho/listar-carrinho-do-usuario?usuarioId=" + usuraioid).Result;
 
         }
     }

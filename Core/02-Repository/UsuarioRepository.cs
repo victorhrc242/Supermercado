@@ -37,5 +37,4 @@ public class UsuarioRepository
         using var connection = new SQLiteConnection(ConnectionString);
         return connection.Get<Usuario>(id);
     }
-
 }

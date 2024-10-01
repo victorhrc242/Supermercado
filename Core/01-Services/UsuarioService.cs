@@ -33,16 +33,16 @@ public class UsuarioService
     {
         repository.Editar(editPessoa);
     }
-    public Usuario fazerlogin(usuariologinDTO usuariologin)
+    public Usuario FazerLogin(usuariologinDTO usuarioLogin)
     {
-       List<Usuario> listusuarios =  Listar();
-        foreach(Usuario usuario in listusuarios)
+        List<Usuario> listUsuario = Listar();
+        foreach (Usuario usuario in listUsuario)
         {
-            if(usuario.Username ==usuariologin.Username && usuario.Senha == usuariologin.Senha)
+            if (usuario.Username == usuarioLogin.Username
+                && usuario.Senha == usuarioLogin.Senha)
             {
-               
+                return usuario;
             }
-            return usuario;
         }
         return null;
     }

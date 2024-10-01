@@ -18,17 +18,16 @@ public class UsuarioController : ControllerBase
         _service = new UsuarioService(_config);
         _mapper = mapper;
     }
-    [HttpPost("fazer-login")]
-    public  Usuario fazerlogin(usuariologinDTO  usuariologin)
-    {
-       Usuario usuario= _service.fazerlogin(usuariologin);
-        return usuario;
-    }
     [HttpPost("adicionar-usuario")]
     public void AdicionarAluno(Usuario usuarioDTO)
     {
-        Usuario usuario = _mapper.Map<Usuario>(usuarioDTO);
-        _service.Adicionar(usuario);
+        _service.Adicionar(usuarioDTO);
+    }
+    [HttpPost("fazer-login")]
+    public Usuario FazerLogin(usuariologinDTO usuarioLogin)
+    {
+        Usuario usuario = _service.FazerLogin(usuarioLogin);
+        return usuario;
     }
     [HttpGet("listar-usuario")]
     public List<Usuario> ListarAluno()

@@ -24,10 +24,10 @@ namespace API.Controllers
             Endereco ender = _mapper.Map<Endereco>(Endereco);
             _service.Adicionar(ender);
         }
-        [HttpGet("listar-Endereços")]
-        public List<Endereco> ListarEndereco()
+        [HttpGet("listar-endereco")]
+        public List<Endereco> ListarCarrinhoDoUsuario([FromQuery] int usuarioId)
         {
-            return _service.Listar();
+            return _service.Listar(usuarioId);
         }
         [HttpPut("editar-Endereco")]
         public void EditarEndereco(Endereco p)

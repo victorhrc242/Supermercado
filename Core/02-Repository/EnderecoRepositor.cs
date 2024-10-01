@@ -1,4 +1,5 @@
 ﻿using Core._03_Entidades;
+using Dapper;
 using Dapper.Contrib.Extensions;
 using System;
 using System.Collections.Generic;
@@ -33,10 +34,12 @@ namespace Core._02_Repository
             using var connection = new SQLiteConnection(ConnectionString);
             connection.Update<Endereco>(endereco);
         }
-        public List<Endereco> Listar()
+        public List<Endereco> ListarCarrinhoDoUsuario(int usuarioId)
         {
             using var connection = new SQLiteConnection(ConnectionString);
-            return connection.GetAll<Endereco>().ToList();
+            List<Endereco> list = connection.Query<Endereco>($"SELECT Id, UsuarioId FROM Enderecos WHERE UsuarioId = {usuarioId}").ToList();
+
+            return list;
         }
         public Endereco BuscarPorId(int id)
         {
