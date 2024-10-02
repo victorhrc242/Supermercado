@@ -16,15 +16,17 @@ namespace FrontEnd.UseCases
         {
             _cliente = cliente;
         }
-        public void adicionarcarrinho(Endereco endereco)
+        public Endereco adicionarcarrinho(Endereco endereco)
         {
-            HttpResponseMessage response = _cliente.PostAsJsonAsync("Endereco/adicionar-Endereço",endereco).Result;
+            HttpResponseMessage response = _cliente.PostAsJsonAsync("Endereco/adicionar-endereco", endereco).Result;
+            Endereco enderecoCadastrado = response.Content.ReadFromJsonAsync<Endereco>().Result;
+            return enderecoCadastrado;
         }
 
         public List<Endereco> ListarEnderecos(int usuraioid)
         {
 
-            return _cliente.GetFromJsonAsync<List<Endereco>>("Carrinho/listar-carrinho-do-usuario?usuarioId=" + usuraioid).Result;
+            return _cliente.GetFromJsonAsync<List<Endereco>>("Endereco/listar-endereco-usuario?usuarioId=" + usuraioid).Result;
 
         }
     }

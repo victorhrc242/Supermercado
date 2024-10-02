@@ -44,6 +44,15 @@ namespace TrabalhoFinal._02_Repository.Data
                 UsuarioId INTEGER NOT NULL
                  );";
 
+                commandoSQL += @"   
+                 CREATE TABLE IF NOT EXISTS Vendas(
+                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 Enderecoid integer not null,
+                 Metododepagamento text not null,
+                 Valorfinal integer not null
+             
+                 );";
+
                 connection.Execute(commandoSQL);
             }
         }

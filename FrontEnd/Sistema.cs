@@ -144,59 +144,71 @@ public class Sistema
             {
                 Console.WriteLine(car.ToString());
             }
-            Console.WriteLine("Deseja 1-Retirar  ou 2-Entregar");
-            int opcaos =int.Parse(Console.ReadLine());
-
-            if(opcaos== 1)
-            {
-                Console.WriteLine("ok a sua encomdenda esta pronta para a retirada");
-            }
-            if(opcaos== 2)
-            {
-                Entregar();
-            }
+            RealizarEntrega();
        
         }
     }
 
 
-   public void Entregar()
+    private void RealizarEntrega()
     {
-        List<Endereco> enderecos= _EnderecoUC.ListarEnderecos(UsuarioLogado.id);
-        foreach(Endereco e in enderecos)
+        int idEndereco = 0;
+        Console.WriteLine("Escolha uma opção: \n 1- Retirar na loja \n 2- Entregar a domicilio");
+        int alternativa = int.Parse(Console.ReadLine());
+        if (alternativa == 1)
         {
-            Console.WriteLine(e.ToString());
+            Console.WriteLine("Retire a sua compra na loja em 7 dias.");
         }
-
-        int opcao = 1;
-        if (enderecos.Count == 0)
+        else if (alternativa == 2)
         {
-            Endereco enderecoss =cadastrar();
-            _EnderecoUC.adicionarcarrinho(enderecoss);
-            Console.WriteLine("Usuário cadastrado com sucesso");
-        }
-        else{
+            Console.WriteLine("Escolha as opção: \n 1- Listar Enderecos cadastrados \n 2 - Cadastrar endereço");
+            int opcao = int.Parse(Console.ReadLine());
+            if (opcao == 1)
+            {
+                List<Endereco> enderecos = _EnderecoUC.ListarEnderecos(UsuarioLogado.id);
+                foreach (Endereco end in enderecos)
+                {
+                    Console.WriteLine(end.ToString());
+                }
+                Console.WriteLine("Digite qual endereco deseja entregar");
+                idEndereco = int.Parse(Console.ReadLine());
+                Console.WriteLine("vc deseja comprar os produtos 1=sim 2=não");
+                int opcaos = int.Parse(Console.ReadLine());
+                if (opcaos == 1)
+                {
+                    Venda venda = selecionarmetododepagamento();
+                    idEndereco = venda.id;
+                   List<Readcarrinho> r = _carrinhoUC.somarprodutos(UsuarioLogado.id);
+                    foreach(Readcarrinho e in r)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
 
-            listarendeeco();
-            Console.WriteLine("qual desses eo seu endereço");
-            int endereop=int .Parse(Console.ReadLine());
-            
+                }
+            }
+            else
+            {
+                Endereco endereco = CriarEndereco();
+                endereco = _EnderecoUC.adicionarcarrinho(endereco);
+                idEndereco = endereco.Id;
+                
+            }
+
         }
 
 
     }
 
-    public Endereco cadastrar()
+
+    public Venda selecionarmetododepagamento()
     {
-        Endereco enderecos=new Endereco();
-        Console.WriteLine("Qual o nome da sua Rua");
-        enderecos.Rua=(Console.ReadLine());
-        Console.WriteLine("Qual o seu bairro");
-        enderecos.Bairro = (Console.ReadLine());
-        Console.WriteLine("qual o numero de sua casa");
-        enderecos.Numero=int.Parse(Console.ReadLine());
-        return enderecos;
+        Venda venda= new Venda();
+        Console.WriteLine("qual a forma de pagamento");
+        venda.metodopagamento = Console.ReadLine();
+        return venda;
     }
+
+
 
 
     private void ListarProdutos()
@@ -207,14 +219,17 @@ public class Sistema
             Console.WriteLine(u.ToString());
         }
     }
-
-    private void listarendeeco()
+    public Endereco CriarEndereco()
     {
-        List<Endereco> enderecos = _EnderecoUC.ListarEnderecos(UsuarioLogado.id);
-        foreach (Endereco e in enderecos)
-        {
-            Console.WriteLine(e.ToString());
-        }
+        Endereco endereco = new Endereco();
+        Console.WriteLine("Digite sua rua: ");
+        endereco.Rua = Console.ReadLine();
+        Console.WriteLine("Digite seu bairro: ");
+        endereco.Bairro = Console.ReadLine();
+        Console.WriteLine("Digite seu numero: ");
+        endereco.Numero = int.Parse(Console.ReadLine());
+        endereco.UsuarioId = UsuarioLogado.id;
+        return endereco;
     }
-  
+
 }

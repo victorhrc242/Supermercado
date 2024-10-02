@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace FrontEnd.UseCases
 {
-   
+
     public class CarrinhoUC
     {
         private readonly HttpClient _cliente;
         public CarrinhoUC(HttpClient cliente)
         {
-            _cliente= cliente;
+            _cliente = cliente;
         }
         public void adicionarcarrinho(Carrinho carrinho)
         {
@@ -26,6 +26,17 @@ namespace FrontEnd.UseCases
         {
 
             return _cliente.GetFromJsonAsync<List<Readcarrinho>>("Carrinho/listar-carrinho-do-usuario?usuarioId=" + usuarioid).Result;
+
+        }
+
+        public  somarprodutos(int usuarioid)
+        {
+            ListarProdutos(usuarioid);
+            Readcarrinho r=new Readcarrinho();
+          
+
+         
+            
 
         }
 
