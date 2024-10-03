@@ -34,10 +34,7 @@ namespace Core._01_Services
         {
             return repository.BuscarPorId(id);
         }
-        public void Editar(Venda editPessoa)
-        {
-            repository.Editar(editPessoa);
-        }
+   
        
     }
 }

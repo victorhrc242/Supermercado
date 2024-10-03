@@ -17,7 +17,7 @@ public class Sistema
         _usuarioUC = new UsuarioUC(cliente);
         _produtoUC = new ProdutoUC(cliente);
         _carrinhoUC = new CarrinhoUC(cliente);
-        _EnderecoUC= new EnderecoUC(cliente);
+        _EnderecoUC = new EnderecoUC(cliente);
     }
     public void IniciarSistema()
     {
@@ -95,7 +95,7 @@ public class Sistema
             Senha = senha
         };
         Usuario usuario = _usuarioUC.FazerLogin(usuDTO);
-        if (usuario == null )
+        if (usuario == null)
         {
             Console.WriteLine("Usuário ou senha inválidos!!!");
         }
@@ -106,9 +106,9 @@ public class Sistema
         Console.WriteLine("1 - Listar Produtos");
         Console.WriteLine("2 - Cadastrar Produto");
         Console.WriteLine("3 - Realizar uma compra");
+        Console.WriteLine("4 - Visualizar carrinho");
         Console.WriteLine("Qual operação deseja realizar?");
         int resposta = int.Parse(Console.ReadLine());
-
         if (resposta == 1)
         {
             ListarProdutos();
@@ -119,14 +119,12 @@ public class Sistema
             _produtoUC.CiarPorduto(produto);
             Console.WriteLine("Usuário cadastrado com sucesso");
         }
-        else if (resposta == 3)
+        if (resposta == 3)
         {
             int opcao = 1;
             while (opcao == 1)
             {
-                //Listar Produto
                 ListarProdutos();
-                //Escolher Produto
                 Console.WriteLine("Digite os produtos que deseja comprar:");
                 int produtoId = int.Parse(Console.ReadLine());
                 Carrinho c = new Carrinho();
@@ -145,15 +143,16 @@ public class Sistema
                 Console.WriteLine(car.ToString());
             }
             RealizarEntrega();
-       
+        }
+        else if (resposta == 4)
+        {
+            RealizarEntrega();
         }
     }
-
-
     private void RealizarEntrega()
     {
         int idEndereco = 0;
-        Console.WriteLine("Escolha uma opção: \n 1- Retirar na loja \n 2- Entregar a domicilio");
+        Console.WriteLine("Escolha uma opção: \n 1- Retirar na loja \n 2- Entregar a domicílio");
         int alternativa = int.Parse(Console.ReadLine());
         if (alternativa == 1)
         {
@@ -161,8 +160,9 @@ public class Sistema
         }
         else if (alternativa == 2)
         {
-            Console.WriteLine("Escolha as opção: \n 1- Listar Enderecos cadastrados \n 2 - Cadastrar endereço");
+            Console.WriteLine("Escolha a opção: \n 1- Listar Endereços cadastrados \n 2- Cadastrar endereço");
             int opcao = int.Parse(Console.ReadLine());
+
             if (opcao == 1)
             {
                 List<Endereco> enderecos = _EnderecoUC.ListarEnderecos(UsuarioLogado.id);
@@ -170,47 +170,46 @@ public class Sistema
                 {
                     Console.WriteLine(end.ToString());
                 }
-                Console.WriteLine("Digite qual endereco deseja entregar");
+                Console.WriteLine("Digite qual endereço deseja entregar");
                 idEndereco = int.Parse(Console.ReadLine());
-                Console.WriteLine("vc deseja comprar os produtos 1=sim 2=não");
+
+                Console.WriteLine("Você deseja comprar os produtos?\n 1=sim \n2=não");
                 int opcaos = int.Parse(Console.ReadLine());
+
                 if (opcaos == 1)
                 {
                     Venda venda = selecionarmetododepagamento();
                     idEndereco = venda.id;
-                   List<Readcarrinho> r = _carrinhoUC.somarprodutos(UsuarioLogado.id);
-                    foreach(Readcarrinho e in r)
+
+                    double totalCarrinho = _carrinhoUC.Somar(UsuarioLogado.id);
+
+                    List<Readcarrinho> r = _carrinhoUC.ListarProdutos(UsuarioLogado.id);
+                    foreach (Readcarrinho e in r)
                     {
                         Console.WriteLine(e.ToString());
                     }
-
+                    Console.WriteLine("O total dos produtos no carrinho é: " + totalCarrinho.ToString("C"));
+                }
+                if (opcaos == 2)
+                {
+                    ExibirMenuPrincipal();
                 }
             }
-            else
+            if (opcao == 2)
             {
                 Endereco endereco = CriarEndereco();
                 endereco = _EnderecoUC.adicionarcarrinho(endereco);
                 idEndereco = endereco.Id;
-                
             }
-
         }
-
-
     }
-
-
     public Venda selecionarmetododepagamento()
     {
-        Venda venda= new Venda();
+        Venda venda = new Venda();
         Console.WriteLine("qual a forma de pagamento");
         venda.metodopagamento = Console.ReadLine();
         return venda;
     }
-
-
-
-
     private void ListarProdutos()
     {
         List<Produto> produtos = _produtoUC.ListarProdutos();
@@ -231,5 +230,4 @@ public class Sistema
         endereco.UsuarioId = UsuarioLogado.id;
         return endereco;
     }
-
 }

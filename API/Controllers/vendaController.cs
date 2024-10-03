@@ -32,10 +32,7 @@ namespace API.Controllers
             return _service.Listar();
         }
         [HttpPut("editar-usuario")]
-        public void EditarUsuario(Venda p)
-        {
-            _service.Editar(p);
-        }
+       
         [HttpDelete("deletar-usuario")]
         public void DeletarUsuario(int id)
         {
