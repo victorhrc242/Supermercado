@@ -1,4 +1,5 @@
-﻿using Core._03_Entidades;
+﻿using Core._02_Repository.Interfaces;
+using Core._03_Entidades;
 using Core.Entidades;
 using Dapper;
 using Dapper.Contrib.Extensions;
@@ -6,7 +7,7 @@ using System.Data.SQLite;
 
 namespace TrabalhoFinal._02_Repository;
 
-public class EnderecoRepository
+public class EnderecoRepository:IEnderecoReposytor
 {
     private readonly string ConnectionString;
     public EnderecoRepository(string connectioString)

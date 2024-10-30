@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core._01_Services;
+using Core._01_Services.Interfaces;
 using Core._03_Entidades;
 using Microsoft.AspNetCore.Mvc;
 using TrabalhoFinal._01_Services;
@@ -12,7 +13,7 @@ namespace API.Controllers
 
     public class vendaController : ControllerBase
     {
-        private readonly vendaservice _service;
+        private readonly IVendaservice _service;
         private readonly IMapper _mapper;
         public vendaController(IConfiguration config, IMapper mapper)
         {

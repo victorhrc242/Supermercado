@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core._01_Services.Interfaces;
 using Core._03_Entidades.DTO;
 using Core.Entidades;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,12 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class UsuarioController : ControllerBase
 {
-    private readonly UsuarioService _service;
+    private readonly IUsuarioservice _service;
     private readonly IMapper _mapper;
-    public UsuarioController(IConfiguration config, IMapper mapper)
+    public UsuarioController(IConfiguration config, IMapper mapper,IUsuarioservice usuarioservice)
     {
         string _config = config.GetConnectionString("DefaultConnection");
-        _service = new UsuarioService(_config);
+        _service = usuarioservice;
         _mapper = mapper;
     }
     [HttpPost("adicionar-usuario")]

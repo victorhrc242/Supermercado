@@ -1,15 +1,17 @@
-﻿using Core.Entidades;
+﻿using Core._02_Repository.Interfaces;
+using Core.Entidades;
 using Dapper.Contrib.Extensions;
+using Microsoft.Extensions.Configuration;
 using System.Data.SQLite;
 
 namespace TrabalhoFinal._02_Repository;
 
-public class UsuarioRepository
+public class UsuarioRepository:IusuarioReposytor
 {
     private readonly string ConnectionString;
-    public UsuarioRepository(string connectioString)
+    public UsuarioRepository(IConfiguration configuration)
     {
-        ConnectionString = connectioString;
+        ConnectionString = configuration.GetConnectionString("DefaultConnection");
     }
     public void Adicionar(Usuario usuario)
     {

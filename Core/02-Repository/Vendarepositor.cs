@@ -1,4 +1,5 @@
-﻿using Core._03_Entidades;
+﻿using Core._02_Repository.Interfaces;
+using Core._03_Entidades;
 using Dapper.Contrib.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Core._02_Repository
 {
-    public class Vendarepositor
+    public class Vendarepositor:IVendaReposytor
     {
         private readonly string ConnectionString;
         public Vendarepositor(string connectioString)

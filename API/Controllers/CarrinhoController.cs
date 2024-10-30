@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core._01_Services.Interfaces;
 using Core.Entidades;
 using FrontEnd.models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class CarrinhoController : ControllerBase
 {
-    private readonly CarrinhoService _service;
+    private readonly ICarrinhoservice _service;
     private readonly IMapper _mapper;
     public CarrinhoController(IConfiguration config, IMapper mapper)
     {
