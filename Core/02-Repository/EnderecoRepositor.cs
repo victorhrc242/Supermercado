@@ -12,7 +12,7 @@ namespace TrabalhoFinal._02_Repository;
 public class EnderecoRepository:IEnderecoReposytor
 {
     private readonly string ConnectionString;
-    public EnderecoRepository( IConfiguration configuration)
+    public EnderecoRepository(IConfiguration configuration)
     {
         ConnectionString= configuration.GetConnectionString("DefaultConnection");
     }

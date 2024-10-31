@@ -9,7 +9,7 @@ namespace TrabalhoFinal._01_Services;
 
 public class EnderecoService: IEnderecoservice
 {
-    public EnderecoRepository repository { get; set; }
+    private readonly IEnderecoReposytor repository;
     public EnderecoService(IEnderecoReposytor enderecorepositor)
     {
         repository = enderecorepositor;
