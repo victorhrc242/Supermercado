@@ -13,10 +13,10 @@ public class CarrinhoController : ControllerBase
 {
     private readonly ICarrinhoservice _service;
     private readonly IMapper _mapper;
-    public CarrinhoController(IConfiguration config, IMapper mapper)
+    public CarrinhoController(IConfiguration config, IMapper mapper,ICarrinhoservice carrinhoservice)
     {
         string _config = config.GetConnectionString("DefaultConnection");
-        _service = new CarrinhoService(_config);
+        _service = carrinhoservice;
         _mapper = mapper;
     }
     [HttpPost("adicionar-carrinho")]

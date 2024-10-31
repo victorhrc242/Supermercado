@@ -14,9 +14,9 @@ namespace Core._01_Services
     public class vendaservice:IVendaservice
     {
         public IVendaReposytor repository { get; set; }
-        public vendaservice(string _config)
+        public vendaservice(IVendaReposytor vendarepositor)
         {
-            repository = new Vendarepositor(_config);
+            repository = vendarepositor;
         }
         public void Adicionar(Venda usuario)
         {

@@ -15,10 +15,10 @@ namespace API.Controllers
     {
         private readonly IVendaservice _service;
         private readonly IMapper _mapper;
-        public vendaController(IConfiguration config, IMapper mapper)
+        public vendaController(IConfiguration config, IMapper mapper,IVendaservice vendaservice)
         {
             string _config = config.GetConnectionString("DefaultConnection");
-        _service=new vendaservice(_config);
+            _service = vendaservice;
             _mapper = mapper;
         }
         [HttpPost("adicionar-usuario")]

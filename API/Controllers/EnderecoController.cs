@@ -13,10 +13,10 @@ public class EnderecoController : ControllerBase
 {
     private readonly IEnderecoservice _service;
     private readonly IMapper _mapper;
-    public EnderecoController(IConfiguration config, IMapper mapper)
+    public EnderecoController(IConfiguration config, IMapper mapper,IEnderecoservice enderecoservice)
     {
         string _config = config.GetConnectionString("DefaultConnection");
-        _service = new EnderecoService(_config);
+        _service = enderecoservice;
         _mapper = mapper;
     }
     [HttpPost("adicionar-endereco")]

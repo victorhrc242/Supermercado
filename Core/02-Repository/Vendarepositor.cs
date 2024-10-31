@@ -1,8 +1,10 @@
 ﻿using Core._02_Repository.Interfaces;
 using Core._03_Entidades;
 using Dapper.Contrib.Extensions;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -13,9 +15,9 @@ namespace Core._02_Repository
     public class Vendarepositor:IVendaReposytor
     {
         private readonly string ConnectionString;
-        public Vendarepositor(string connectioString)
+        public Vendarepositor(IConfiguration configuration)
         {
-            ConnectionString = connectioString;
+            ConnectionString = configuration.GetConnectionString("DefaultConnection");
         }
         public void Adicionar(Venda venda)
         {

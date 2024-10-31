@@ -8,9 +8,9 @@ namespace TrabalhoFinal._01_Services;
 public class ProdutoService:IProdutoservice
 {
     public IProdutoReposytor repository { get; set; }
-    public ProdutoService(string _config)
+    public ProdutoService(IProdutoReposytor produtorepositor)
     {
-        repository = new ProdutoRepository(_config);
+        repository = produtorepositor;
     }
     public void Adicionar(Produto produto)
     {

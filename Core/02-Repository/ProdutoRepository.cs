@@ -1,6 +1,8 @@
 ﻿using Core._02_Repository.Interfaces;
 using Core.Entidades;
 using Dapper.Contrib.Extensions;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 using System.Data.SQLite;
 
 namespace TrabalhoFinal._02_Repository;
@@ -8,9 +10,9 @@ namespace TrabalhoFinal._02_Repository;
 public class ProdutoRepository:IProdutoReposytor
 {
     private readonly string ConnectionString;
-    public ProdutoRepository(string connectioString)
+    public ProdutoRepository(IConfiguration configuration)
     {
-        ConnectionString = connectioString;
+        ConnectionString = configuration.GetConnectionString("DefaultConnection");
     }
     public void Adicionar(Produto produto)
     {

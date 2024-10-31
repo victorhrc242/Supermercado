@@ -3,6 +3,8 @@ using Core._03_Entidades;
 using Core.Entidades;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using Microsoft.Extensions.Configuration;
+using System.Configuration.Internal;
 using System.Data.SQLite;
 
 namespace TrabalhoFinal._02_Repository;
@@ -10,9 +12,9 @@ namespace TrabalhoFinal._02_Repository;
 public class EnderecoRepository:IEnderecoReposytor
 {
     private readonly string ConnectionString;
-    public EnderecoRepository(string connectioString)
+    public EnderecoRepository( IConfiguration configuration)
     {
-        ConnectionString = connectioString;
+        ConnectionString= configuration.GetConnectionString("DefaultConnection");
     }
     public void Adicionar(Endereco endereco)
     {

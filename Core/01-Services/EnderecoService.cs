@@ -1,5 +1,6 @@
 ﻿
 using Core._01_Services.Interfaces;
+using Core._02_Repository.Interfaces;
 using Core._03_Entidades;
 using Core.Entidades;
 using TrabalhoFinal._02_Repository;
@@ -9,9 +10,9 @@ namespace TrabalhoFinal._01_Services;
 public class EnderecoService: IEnderecoservice
 {
     public EnderecoRepository repository { get; set; }
-    public EnderecoService(string _config)
+    public EnderecoService(IEnderecoReposytor enderecorepositor)
     {
-        repository = new EnderecoRepository(_config);
+        repository = enderecorepositor;
     }
     public void Adicionar(Endereco endereco)
     {
