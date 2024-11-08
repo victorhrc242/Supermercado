@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.UsuarioController.AdicionarAluno(Core.Entidades.Usuario)">
+            <summary>
+            adiciona o usuario
+            </summary>
+            <param name="usuarioDTO"></param>
+            <returns> isso adicionara o usuario</returns>
+        </member>
+    </members>
+</doc>
